@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+      "outDir": "./built/",
+      "sourceMap": true,
+      "strict": true,
+      "noImplicitReturns": true,
+      "noImplicitAny": false,
+      "module": "es2022",
+      "jsx": "react",
+      "experimentalDecorators": true,
+      "emitDecoratorMetadata": true,
+      "moduleResolution": "node",
+      "target": "es6",
+      "lib": ["es2016", "dom"],
+      "allowSyntheticDefaultImports": true
+  },
+  "include": ["resources/ts/**/*",]
+}
