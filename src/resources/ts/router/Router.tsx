@@ -4,6 +4,7 @@ import { Switch, Route } from "react-router-dom";
 import { Login } from "../component/pages/Login";
 import { Page404 } from "../component/pages/Page404";
 import { HomeRoutes } from "./HomeRoutes";
+import { HeaderLayout } from "../component/templates/HeaderLayout";
 
 export const Router = () => {
     return (
@@ -22,7 +23,7 @@ export const Router = () => {
                                 exact={route.exact}
                                 path={`${url}${route.path}`}
                             >
-                                {route.children}
+                                <HeaderLayout>{route.children}</HeaderLayout>
                             </Route>
                         ))}
                     </Switch>
