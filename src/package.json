@@ -37,6 +37,7 @@
         "@chakra-ui/system": "^1.0.0",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
+        "bootstrap-icons": "^1.10.2",
         "framer-motion": "^3.10.6"
     }
 }
