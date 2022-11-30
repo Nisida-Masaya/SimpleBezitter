@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useEffect, VFC } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Box, Center, Spinner } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 
 import { useAllArticles } from "../../hooks/useAllArticles";
 
@@ -34,12 +35,12 @@ export const Home: VFC = memo(() => {
                             <span>{article.context}</span>
                         </Box>
                     ))}
-                    <Link
+                    <AddIcon
+                        w={10}
+                        h={10}
+                        color="gray.700"
                         onClick={onClickCreateArticle}
-                        to="/home/createArticle"
-                    >
-                        新規投稿
-                    </Link>
+                    ></AddIcon>
                 </Box>
             )}
         </>
