@@ -1,8 +1,8 @@
-import React, { memo, useCallback, useEffect, useState, VFC } from "react";
-import axios from "axios";
-
-import { Article } from "../../types/api/Article";
+import React, { memo, useCallback, useEffect, VFC } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { Box, Center, Spinner } from "@chakra-ui/react";
+
+import { useAllArticles } from "../../hooks/useAllArticles";
 
 //VFCを使用することでchildrenの有無がわかる
 //memoコンポーネントが変更されない限り再レンダリングしない
@@ -11,36 +11,37 @@ import { Link, useHistory } from "react-router-dom";
   useCallBackと使うと処理が変わらない場合は同じものを使う（関数を使う時）
 */
 export const Home: VFC = memo(() => {
-    const [articles, setArticles] = useState<Array<Article>>([]);
     const history = useHistory();
+    const { getArticles, loading, articles } = useAllArticles();
 
-    const onClickCreateArticle = useCallback(() => history.push("/home/createArticle"), []);
+    const onClickCreateArticle = useCallback(
+        () => history.push("/home/createArticle"),
+        []
+    );
 
+    useEffect(() => getArticles(), []);
 
-    const getArticles = async () => {
-        const data = await axios
-            .get<Array<Article>>("api/articles")
-            .then((res) => {
-                setArticles(res.data);
-            });
-        console.log(data);
-    };
-
-    useEffect(() => {
-        getArticles();
-    });
-
-  return (
-    <>
-            <h1>ホームページ</h1>
-            <Link onClick={onClickCreateArticle} to="/home/createArticle" >新規投稿</Link>
-            <ul>
-                {articles.map((article) => (
-                    <li key={article.id}>
-                        <span>{article.context}</span>
-                    </li>
-                ))}
-            </ul> 
+    return (
+        <>
+            {loading ? (
+                <Center h="100vh">
+                    <Spinner color="blue.200" />
+                </Center>
+            ) : (
+                <Box>
+                    {articles.map((article) => (
+                        <Box key={article.id}>
+                            <span>{article.context}</span>
+                        </Box>
+                    ))}
+                    <Link
+                        onClick={onClickCreateArticle}
+                        to="/home/createArticle"
+                    >
+                        新規投稿
+                    </Link>
+                </Box>
+            )}
         </>
-  );
+    );
 });
