@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticlesRequest;
 use App\Http\Requests\UpdateArticlesRequest;
+use App\Http\Requests\ArticlesRequest;
+use Illuminate\Http\Request;
 use App\Models\Articles;
+use Illuminate\Support\Facades\Validator;
 
 class ArticlesController extends Controller
 {
@@ -32,12 +35,23 @@ class ArticlesController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreArticlesRequest  $request
-     * @return \Illuminate\Http\Response
+     * @param  ArticleRequest  $request
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function store(StoreArticlesRequest $request)
+    public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'context' => 'unique:posts|max:255',
+        ]);
+
+        if ($validator->fails()) {
+        }
+
+        $article = Articles::create([
+            'context' => $request->input('context'),
+        ]);
+
+        return $article ? response()->json($article, 201) : response()->json([], 500);
     }
 
     /**
