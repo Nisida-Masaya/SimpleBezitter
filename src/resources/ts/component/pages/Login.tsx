@@ -9,6 +9,10 @@ import {
     Stack,
     InputGroup,
     InputRightElement,
+    FormControl,
+    FormLabel,
+    FormHelperText,
+    FormErrorMessage,
 } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
@@ -18,12 +22,13 @@ export const Login: VFC = memo(() => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login } = useAuthenticate();
+    const { login, loading } = useAuthenticate();
 
     //メールアドレス
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
+    const isError = email === "" || password === "";
 
     //パスワード
     const [show, setShow] = useState(false);
@@ -46,6 +51,13 @@ export const Login: VFC = memo(() => {
                     </Heading>
                     <Divider my={4} />
                     <Stack spacing={6} py={4} px={10}>
+                        <FormControl isInvalid={isError}>
+                            {!isError ? null : (
+                                <FormErrorMessage>
+                                    メールアドレスとパスワードは必須です。
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
                         <Input
                             id="email"
                             type="email"
@@ -71,7 +83,11 @@ export const Login: VFC = memo(() => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <PrimaryButton onClick={onClickLogin}>
+                        <PrimaryButton
+                            onClick={onClickLogin}
+                            loading={loading}
+                            disabled={email === "" || password === ""}
+                        >
                             ログイン
                         </PrimaryButton>
                     </Stack>

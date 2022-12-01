@@ -6,11 +6,14 @@ import { User } from "../types/api/User";
 
 export const useAuthenticate = () => {
     const [isAuth, setIsAuth] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const history = useHistory();
 
     const login = useCallback(
         ({ email, password }: { email: string; password: string }) => {
-            const data = axios
+            setLoading(true);
+            axios
                 .post<User>("/api/login", { email, password })
                 .then((res) => {
                     setIsAuth(true);
@@ -20,13 +23,16 @@ export const useAuthenticate = () => {
                 })
                 .catch(() => {
                     console.log("ログインできません");
+                })
+                .finally(() => {
+                    setLoading(false);
                 });
         },
         []
     );
 
     const logout = useCallback(() => {
-        const data = axios
+        axios
             .post<User>("/api/logout")
             .then((res) => {
                 setIsAuth(false);
@@ -39,5 +45,5 @@ export const useAuthenticate = () => {
             });
     }, []);
 
-    return { login, logout, isAuth };
+    return { login, logout, isAuth, loading };
 };
