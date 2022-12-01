@@ -3,10 +3,13 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 
 import { User } from "../types/api/User";
+import { useMessage } from "./useMessage";
 
 export const useAuthenticate = () => {
     const [isAuth, setIsAuth] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const { showMessage } = useMessage();
 
     const history = useHistory();
 
@@ -17,12 +20,18 @@ export const useAuthenticate = () => {
                 .post<User>("/api/login", { email, password })
                 .then((res) => {
                     setIsAuth(true);
+                    showMessage({
+                        title: "ログインしました。",
+                        status: "success",
+                    });
                     history.push("/home");
-                    console.log("ログインしました");
                     console.log(res.data);
                 })
                 .catch(() => {
-                    console.log("ログインできません");
+                    showMessage({
+                        title: "ログインに失敗しました。",
+                        status: "error",
+                    });
                 })
                 .finally(() => {
                     setLoading(false);
