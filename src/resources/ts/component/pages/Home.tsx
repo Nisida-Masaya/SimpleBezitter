@@ -35,12 +35,14 @@ export const Home: VFC = memo(() => {
                             <span>{article.context}</span>
                         </Box>
                     ))}
-                    <AddIcon
-                        w={10}
-                        h={10}
-                        color="gray.700"
-                        onClick={onClickCreateArticle}
-                    ></AddIcon>
+                    <Box borderRadius="md">
+                        <AddIcon
+                            w={10}
+                            h={10}
+                            color="gray.700"
+                            onClick={onClickCreateArticle}
+                        ></AddIcon>
+                    </Box>
                 </Box>
             )}
         </>
