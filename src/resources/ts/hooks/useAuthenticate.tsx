@@ -45,12 +45,18 @@ export const useAuthenticate = () => {
             .post<User>("/api/logout")
             .then((res) => {
                 setIsAuth(false);
-                //ログインURL
+                //ログアウトURL
                 history.push("/");
-                console.log("ログアウトしました");
+                showMessage({
+                    title: "ログアウトしました。",
+                    status: "success",
+                });
             })
             .catch(() => {
-                console.log("ログアウトできませんでした");
+                showMessage({
+                    title: "ログアウトに失敗しました。",
+                    status: "error",
+                });
             });
     }, []);
 

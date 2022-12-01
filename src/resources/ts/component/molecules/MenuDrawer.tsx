@@ -4,9 +4,12 @@ import {
     Drawer,
     DrawerBody,
     DrawerContent,
+    DrawerFooter,
     DrawerOverlay,
 } from "@chakra-ui/react";
 import { Link, useHistory } from "react-router-dom";
+
+import { useAuthenticate } from "../../hooks/useAuthenticate";
 
 //VFCを使用することでchildrenの有無がわかる
 //memoコンポーネントが変更されない限り再レンダリングしない
@@ -22,6 +25,11 @@ type Props = {
 export const MenuDrawer: VFC<Props> = memo((props) => {
     const { onClose, isOpen } = props;
     const history = useHistory();
+
+    const { logout } = useAuthenticate();
+    const onClickLogout = () => {
+        logout();
+    };
 
     //ホームリンク
     const onClickHome = useCallback(() => history.push("/home"), []);
@@ -73,6 +81,9 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
                             パスワード変更
                         </Button>
                     </DrawerBody>
+                    <DrawerFooter>
+                        <Button onClick={onClickLogout}>ログアウト</Button>
+                    </DrawerFooter>
                 </DrawerContent>
             </DrawerOverlay>
         </Drawer>
