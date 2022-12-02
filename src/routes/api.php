@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'App\Http\Controllers\LoginController@login')->name('login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
+Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
+
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', function (Request $request) {
