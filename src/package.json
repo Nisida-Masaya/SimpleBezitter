@@ -38,6 +38,7 @@
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
         "bootstrap-icons": "^1.10.2",
+        "cancellationtoken": "^2.2.0",
         "framer-motion": "^3.10.6"
     }
 }

@@ -16,16 +16,15 @@ export const useAuthenticate = () => {
     const login = useCallback(
         ({ email, password }: { email: string; password: string }) => {
             setLoading(true);
+            setIsAuth(true);
             axios
                 .post<User>("/api/login", { email, password })
                 .then((res) => {
-                    setIsAuth(true);
                     showMessage({
                         title: "ログインしました。",
                         status: "success",
                     });
-                    history.push("/home");
-                    console.log(res.data);
+                    history.replace("/home");
                 })
                 .catch(() => {
                     showMessage({
@@ -41,12 +40,12 @@ export const useAuthenticate = () => {
     );
 
     const logout = useCallback(() => {
+        setIsAuth(false);
         axios
             .post<User>("/api/logout")
             .then((res) => {
-                setIsAuth(false);
                 //ログアウトURL
-                history.push("/");
+                history.replace("/");
                 showMessage({
                     title: "ログアウトしました。",
                     status: "success",
@@ -60,5 +59,13 @@ export const useAuthenticate = () => {
             });
     }, []);
 
-    return { login, logout, isAuth, loading };
+    const IsAuth = () => {
+        return new Promise(function (resolve, reject){
+            axios.get('api/isAuth')
+            .then((res) => resolve(res.data))
+            .catch((e) => reject(e))
+        });
+    };
+
+    return { login, logout, IsAuth, isAuth, loading };
 };

@@ -44,4 +44,11 @@ class LoginController extends Controller
 
         return \response()->json(true);
     }
+
+    public function isAuth()
+    {
+        //Auth::check()
+        //ログインしているか判定してくれる boolean
+        return response()->json(Auth::check());
+    }
 }
