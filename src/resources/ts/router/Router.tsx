@@ -3,6 +3,7 @@ import { Switch, Route, useHistory } from "react-router-dom";
 import { Center, Spinner } from "@chakra-ui/react";
 
 import { Login } from "../component/pages/Login";
+import { Signup } from "../component/pages/Signup";
 import { Page404 } from "../component/pages/Page404";
 import { HomeRoutes } from "./HomeRoutes";
 import { HeaderLayout } from "../component/templates/HeaderLayout";
@@ -69,6 +70,10 @@ export const Router = () => {
                             </Switch>
                         )}
                     />
+
+                    <Route exact path="/signup">
+                        <Signup></Signup>
+                    </Route>
 
                     <Route path="*">
                         <Page404 />
