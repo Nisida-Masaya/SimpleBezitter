@@ -10,26 +10,21 @@ import {
     Stack,
     InputGroup,
     InputRightElement,
-    FormControl,
-    FormLabel,
-    FormHelperText,
-    FormErrorMessage,
 } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
 import { useAuthenticate } from "../../hooks/useAuthenticate";
 
-export const Login: VFC = memo(() => {
+export const Signup: VFC = memo(() => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login, loading } = useAuthenticate();
+    const { login } = useAuthenticate();
 
     //メールアドレス
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
     };
-    const isError = email === "" || password === "";
 
     //パスワード
     const [show, setShow] = useState(false);
@@ -40,7 +35,7 @@ export const Login: VFC = memo(() => {
     };
 
     const onClickLogin = () => {
-        login({ email, password });
+        login({email, password});
     };
 
     return (
@@ -48,17 +43,10 @@ export const Login: VFC = memo(() => {
             <Flex align="center" justify="center" height="100vh">
                 <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
                     <Heading as="h1" size="lg" textAlign="center">
-                        SimpleBezitter
+                        ユーザー新規作成
                     </Heading>
                     <Divider my={4} />
                     <Stack spacing={6} py={4} px={10}>
-                        <FormControl isInvalid={isError}>
-                            {!isError ? null : (
-                                <FormErrorMessage>
-                                    メールアドレスとパスワードは必須です。
-                                </FormErrorMessage>
-                            )}
-                        </FormControl>
                         <Input
                             id="email"
                             type="email"
@@ -84,15 +72,25 @@ export const Login: VFC = memo(() => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <PrimaryButton
-                            onClick={onClickLogin}
-                            loading={loading}
-                            disabled={email === "" || password === ""}
-                        >
-                            ログイン
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="氏名"
+                            value={email}
+                            onChange={onChangeEmail}
+                        />
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="プロフィール写真"
+                            value={email}
+                            onChange={onChangeEmail}
+                        />
+                        <PrimaryButton onClick={onClickLogin}>
+                            ユーザー作成
                         </PrimaryButton>
 
-                        <Link to="Signup" style={{textAlign: "center"}} >ユーザー新規作成</Link>
+                        <Link to="/" style={{textAlign: "center"}} >ログイン</Link>
                     </Stack>
                 </Box>
             </Flex>
