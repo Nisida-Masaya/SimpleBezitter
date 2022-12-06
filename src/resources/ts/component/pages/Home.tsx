@@ -15,13 +15,18 @@ import { useLoginUser } from "../../hooks/useLoginUser";
 export const Home: VFC = memo(() => {
     const history = useHistory();
     const { getArticles, loading, articles } = useAllArticles();
-    
+    const {loginUser} = useLoginUser();
+
     const onClickCreateArticle = useCallback(
         () => history.push("/home/createArticle"),
         []
     );
 
-    useEffect(() => getArticles(), []);
+    useEffect(() => {
+        getArticles();
+        console.log(loginUser);
+        
+    }, []);
 
     return (
         <>
