@@ -5,7 +5,7 @@
       "strict": true,
       "noImplicitReturns": true,
       "noImplicitAny": false,
-      "module": "es2022",
+      "module": "es2020",
       "jsx": "react",
       "experimentalDecorators": true,
       "emitDecoratorMetadata": true,
@@ -14,5 +14,5 @@
       "lib": ["es2016", "dom"],
       "allowSyntheticDefaultImports": true
   },
-  "include": ["resources/ts/**/*",]
+  "include": ["resources/ts/**/*", "resources/sass/types"]
 }
