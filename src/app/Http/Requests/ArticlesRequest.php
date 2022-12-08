@@ -32,6 +32,7 @@ class ArticlesRequest extends FormRequest
     {
         return [
             'context' => '投稿内容'
+            'article_image' => '投稿写真'
         ];
     }
 }
