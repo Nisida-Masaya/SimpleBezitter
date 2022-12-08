@@ -31,7 +31,7 @@ class ArticlesRequest extends FormRequest
     public function attributes()
     {
         return [
-            'context' => '投稿内容'
+            'context' => '投稿内容',
             'article_image' => '投稿写真'
         ];
     }

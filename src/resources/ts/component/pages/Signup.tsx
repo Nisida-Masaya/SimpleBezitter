@@ -10,6 +10,7 @@ import {
     Stack,
     InputGroup,
     InputRightElement,
+    Textarea,
 } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
@@ -19,6 +20,8 @@ export const Signup: VFC = memo(() => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [user_image, setUserImage] = useState("");
+    const [introduction, setIntroduction] = useState("");
 
     const { createUser } = useUserSignup();
 
@@ -40,7 +43,17 @@ export const Signup: VFC = memo(() => {
         setPassword(e.target.value);
     };
 
-    const onClickSignup = () => createUser(name, email, password);
+    //プロフィール写真
+    const onChangeUserImage = (e) => {
+        setUserImage(e.target.files[0]);
+    }
+
+    //自己紹介文
+    const onChangeIntoroduction = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setIntroduction(e.target.value);
+    }
+
+    const onClickSignup = () => createUser(name, email, password, user_image, introduction);
 
     return (
         <>
@@ -86,13 +99,19 @@ export const Signup: VFC = memo(() => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        {/* <Input
-                            id="email"
-                            type="email"
+                        <Input
+                            id="user_image"
+                            name="user_image"
+                            type="file"
                             placeholder="プロフィール写真"
-                            value={email}
-                            onChange={onChangeEmail}
-                        /> */}
+                            onChange={onChangeUserImage}
+                        />
+                        <Textarea
+                            name="introduction"
+                            value={introduction}
+                            onChange={onChangeIntoroduction}
+                            placeholder="300文字以内"
+                        />
                         <PrimaryButton onClick={onClickSignup}>
                             ユーザー作成
                         </PrimaryButton>

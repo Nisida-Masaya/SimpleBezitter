@@ -26,7 +26,8 @@ class SignupRequest extends FormRequest
         return [
             'name' => 'required|max:300',
             'email' => 'required|max:300',
-            'password' => 'required|max:300'
+            'password' => 'required|max:300',
+            'introduction' => 'required|max:500'
         ];
     }
 
@@ -35,7 +36,9 @@ class SignupRequest extends FormRequest
         return [
             'name' => '名前',
             'email' => 'メールアドレス',
-            'password' => 'パスワード'
+            'password' => 'パスワード',
+            'user_image' => 'プロフィール写真',
+            'introduction' => '自己紹介'
         ];
     }
 }
