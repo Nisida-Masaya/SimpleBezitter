@@ -1,4 +1,4 @@
-import React, { ChangeEvent, memo, useState, VFC } from "react";
+import React, { ChangeEvent, memo, useEffect, useState, VFC } from "react";
 import { Textarea } from "@chakra-ui/react";
 
 import { useCreateArticle } from "../../hooks/useCreateArticle";
@@ -12,30 +12,45 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 */
 
 export const CreateArticle: VFC = memo(() => {
-    const [newArticleContext, setNewArticleContext] = useState('');
+    const [newArticleContext, setNewArticleContext] = useState("");
     const [newArticleImage, setNewArticleImage] = useState();
-    const { createArticle } = useCreateArticle();
+    const { createArticle } = useCreateArticle();    
 
-
-
-    const onChangeArticleContext = (e :ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeArticleContext = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setNewArticleContext(e.target.value);
-    }
+    };
     const onChangeArticleImage = (e) => {
         setNewArticleImage(e.target.files[0]);
-    }
+    };
 
-    const onClickCreateArticle = () => createArticle(newArticleContext, newArticleImage);
+    const onClickCreateArticle = () =>
+        createArticle(newArticleContext, newArticleImage);
 
     return (
         <>
             <p>記事作成ページです。</p>
             <form onSubmit={onClickCreateArticle}>
-                <Textarea name="context" value={newArticleContext} onChange={onChangeArticleContext} placeholder="255文字以内" />
+                <Textarea
+                    name="context"
+                    value={newArticleContext}
+                    onChange={onChangeArticleContext}
+                    placeholder="255文字以内"
+                />
                 <br />
-                <input type="file"  name="article_image" onChange={onChangeArticleImage} />
+                <input
+                    type="file"
+                    name="article_image"
+                    onChange={onChangeArticleImage}
+                />
                 <br />
-                <PrimaryButton onClick={onClickCreateArticle} disabled={newArticleContext === "" && newArticleImage === ""} >作成</PrimaryButton>
+                <PrimaryButton
+                    onClick={onClickCreateArticle}
+                    disabled={
+                        newArticleContext === "" && newArticleImage === ""
+                    }
+                >
+                    作成
+                </PrimaryButton>
             </form>
         </>
     );
