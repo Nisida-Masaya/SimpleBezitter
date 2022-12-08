@@ -4,6 +4,8 @@ import { useHistory } from "react-router-dom";
 
 import { User } from "../types/api/User";
 import { useMessage } from "./useMessage";
+type promiseType = (data: boolean) => void;
+
 
 export const useAuthenticate = () => {
     const [isAuth, setIsAuth] = useState(false);
@@ -60,7 +62,7 @@ export const useAuthenticate = () => {
     }, []);
 
     const IsAuth = () => {
-        return new Promise(function (resolve, reject){
+        return new Promise((resolve: promiseType, reject: promiseType) => {
             axios.get('api/isAuth')
             .then((res) => resolve(res.data))
             .catch((e) => reject(e))

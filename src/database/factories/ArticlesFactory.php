@@ -15,7 +15,7 @@ class ArticlesFactory extends Factory
     {
         return [
             'context' => $this->faker->realText(rand(10, 15)),
-            // 'article_image' => 'https://source.unsplash.com/random',
+            'article_image' => 'https://source.unsplash.com/random',
             'created_at' => now(),
             'updated_at' => now(),
         ];

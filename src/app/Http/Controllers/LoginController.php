@@ -51,4 +51,13 @@ class LoginController extends Controller
         //ログインしているか判定してくれる boolean
         return response()->json(Auth::check());
     }
+
+    public function loginUser(){
+        //ログインユーザ取得
+        if(!Auth::check()){
+            return response()->json(false);
+        }
+        return response()->json();
+        return response()->json(Auth::user());
+    }
 }
