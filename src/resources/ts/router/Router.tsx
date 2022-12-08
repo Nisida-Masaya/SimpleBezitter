@@ -18,7 +18,7 @@ export const Router = () => {
         setLoading(true);
         IsAuth()
             .then((isAuth) => {
-                if (!isAuth) {
+                if (isAuth) {
                     if (history.location.pathname === "/") {
                         history.replace("/home");
                     }

@@ -47,11 +47,21 @@ class ArticlesController extends Controller
         if ($validator->fails()) {
         }
 
+        // dd($request->file('article_image'));
+        if ($request->file('article_image')) {
+            $file = $request->file('article_image');
+            $file_name = $file->getClientOriginalName();
+            $request->file('article_image')->storeAs('public/images', $file_name);
+
+            // dd($article);
+        }
+
         $article = Articles::create([
             'context' => $request->input('context'),
+            'article_image' => 'storage/' . 'images/' . $file_name,
         ]);
 
-        return $article ? response()->json($article, 201) : response()->json([], 500);
+        return $article ? response()->json($article, 201) : response()->json($request, 500);
     }
 
     /**

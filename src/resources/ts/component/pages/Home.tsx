@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useEffect, VFC } from "react";
-import { Link, useHistory } from "react-router-dom";
-import { Box, Center, Spinner } from "@chakra-ui/react";
+import { useHistory } from "react-router-dom";
+import { Box, Center, Image, Spinner } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 import { useAllArticles } from "../../hooks/useAllArticles";
@@ -15,13 +15,16 @@ import { useLoginUser } from "../../hooks/useLoginUser";
 export const Home: VFC = memo(() => {
     const history = useHistory();
     const { getArticles, loading, articles } = useAllArticles();
-    
+    const { loginUser } = useLoginUser();
+
     const onClickCreateArticle = useCallback(
         () => history.push("/home/createArticle"),
         []
-    );
+    );    
 
-    useEffect(() => getArticles(), []);
+    useEffect(() => {
+        getArticles();
+    }, []);
 
     return (
         <>
@@ -34,6 +37,11 @@ export const Home: VFC = memo(() => {
                     {articles.map((article) => (
                         <Box key={article.id}>
                             <span>{article.context}</span>
+                            <Image
+                                src={article.article_image}
+                                width={300}
+                                height={40}
+                            />
                         </Box>
                     ))}
                     <Box borderRadius="md">
