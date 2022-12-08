@@ -81,7 +81,7 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
                             パスワード変更
                         </Button>
                     </DrawerBody>
-                    <DrawerFooter>
+                    <DrawerFooter p={0} bg="gray.100">
                         <Button onClick={onClickLogout}>ログアウト</Button>
                     </DrawerFooter>
                 </DrawerContent>
