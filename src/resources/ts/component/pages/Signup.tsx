@@ -1,4 +1,4 @@
-import React, { ChangeEvent, memo, useState, VFC } from "react";
+import React, { ChangeEvent, memo, useState, VFC, HtmlHTMLAttributes } from "react";
 import { Link, BrowserRouter } from "react-router-dom"
 import {
     Flex,
@@ -13,13 +13,19 @@ import {
 } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
-import { useAuthenticate } from "../../hooks/useAuthenticate";
+import { useUserSignup } from "../../hooks/useUserSignup";
 
 export const Signup: VFC = memo(() => {
+    const [name, setName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const { login } = useAuthenticate();
+    const { createUser } = useUserSignup();
+
+    //名前
+    const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
+        setName(e.target.value);
+    }
 
     //メールアドレス
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -34,9 +40,7 @@ export const Signup: VFC = memo(() => {
         setPassword(e.target.value);
     };
 
-    const onClickLogin = () => {
-        login({email, password});
-    };
+    const onClickSignup = () => createUser(name, email, password);
 
     return (
         <>
@@ -48,9 +52,18 @@ export const Signup: VFC = memo(() => {
                     <Divider my={4} />
                     <Stack spacing={6} py={4} px={10}>
                         <Input
+                            id="name"
+                            type="text"
+                            placeholder="氏名"
+                            name="name"
+                            value={name}
+                            onChange={onChangeName}
+                        />
+                        <Input
                             id="email"
                             type="email"
                             placeholder="メールアドレス"
+                            name="email"
                             value={email}
                             onChange={onChangeEmail}
                         />
@@ -59,6 +72,7 @@ export const Signup: VFC = memo(() => {
                                 pr="4.5rem"
                                 type={show ? "text" : "password"}
                                 placeholder="パスワード"
+                                name="password"
                                 value={password}
                                 onChange={onChangePassword}
                             />
@@ -72,21 +86,14 @@ export const Signup: VFC = memo(() => {
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <Input
-                            id="email"
-                            type="email"
-                            placeholder="氏名"
-                            value={email}
-                            onChange={onChangeEmail}
-                        />
-                        <Input
+                        {/* <Input
                             id="email"
                             type="email"
                             placeholder="プロフィール写真"
                             value={email}
                             onChange={onChangeEmail}
-                        />
-                        <PrimaryButton onClick={onClickLogin}>
+                        /> */}
+                        <PrimaryButton onClick={onClickSignup}>
                             ユーザー作成
                         </PrimaryButton>
 

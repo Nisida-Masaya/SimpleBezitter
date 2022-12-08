@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreArticlesRequest;
 use App\Http\Requests\UpdateArticlesRequest;
-use App\Http\Requests\ArticlesRequest;
+use App\Http\Requests\SignupRequest;
 use Illuminate\Http\Request;
-use App\Models\Articles;
+use App\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
-class ArticlesController extends Controller
+class SignupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,7 +20,7 @@ class ArticlesController extends Controller
     public function index()
     {
         //
-        return Articles::all();
+        return User::all();
     }
 
     /**
@@ -29,35 +30,41 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ArticleRequest  $request
+     * @param  SignupRequest
      * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'context' => 'unique:articles|max:255',
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'unique:users|max:255',
+        //     'email' => 'unique:users|max:255',
+        //     'password' => 'unique:users|max:255',
+        // ]);
+
+        // if ($validator->fails()) {
+        // }
+
+        $signup = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
         ]);
 
-        if ($validator->fails()) {
-        }
+        // dd($signup);
 
-        $article = Articles::create([
-            'context' => $request->input('context'),
-        ]);
-
-        return $article ? response()->json($article, 201) : response()->json([], 500);
+        return $signup ? response()->json($signup, 201) : response()->json([], 500);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Articles  $articles
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
     public function show(Articles $articles)
@@ -68,7 +75,7 @@ class ArticlesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Articles  $articles
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
     public function edit(Articles $articles)
@@ -80,7 +87,7 @@ class ArticlesController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\UpdateArticlesRequest  $request
-     * @param  \App\Models\Articles  $articles
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateArticlesRequest $request, Articles $articles)
@@ -91,7 +98,7 @@ class ArticlesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Articles  $articles
+     * @param  \App\Models\User
      * @return \Illuminate\Http\Response
      */
     public function destroy(Articles $articles)

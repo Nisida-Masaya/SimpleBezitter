@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'App\Http\Controllers\LoginController@login')->name('login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
+Route::post('signup', 'App\Http\Controllers\SignupController@store')->name('signup');
 Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
 
 
