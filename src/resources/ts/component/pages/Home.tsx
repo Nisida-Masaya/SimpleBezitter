@@ -18,7 +18,7 @@ export const Home: VFC = memo(() => {
     const onClickCreateArticle = useCallback(
         () => history.push("/home/createArticle"),
         []
-    );    
+    );
 
     useEffect(() => {
         getArticles();
@@ -42,14 +42,18 @@ export const Home: VFC = memo(() => {
                             />
                         </Box>
                     ))}
-                    <Box borderRadius="md">
-                        <AddIcon
-                            w={10}
-                            h={10}
-                            color="gray.700"
-                            onClick={onClickCreateArticle}
-                        ></AddIcon>
-                    </Box>
+                    <AddIcon
+                        w={10}
+                        h={10}
+                        color="gray.700"
+                        onClick={onClickCreateArticle}
+                        border="1px"
+                        borderRadius="3xl"
+                        p={1}
+                        position="fixed"
+                        bottom={10}
+                        right={10}
+                    ></AddIcon>
                 </Box>
             )}
         </>
