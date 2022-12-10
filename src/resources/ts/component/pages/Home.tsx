@@ -1,9 +1,10 @@
 import React, { memo, useCallback, useEffect, VFC } from "react";
 import { useHistory } from "react-router-dom";
 import { Box, Center, Image, Spinner } from "@chakra-ui/react";
-import { AddIcon } from "@chakra-ui/icons";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 
 import { useAllArticles } from "../../hooks/useAllArticles";
+import { useDeleteArticle } from "../../hooks/useDeleteArticle";
 
 //VFCを使用することでchildrenの有無がわかる
 //memoコンポーネントが変更されない限り再レンダリングしない
@@ -14,6 +15,8 @@ import { useAllArticles } from "../../hooks/useAllArticles";
 export const Home: VFC = memo(() => {
     const history = useHistory();
     const { getArticles, loading, articles } = useAllArticles();
+
+    const { deleteArticle } = useDeleteArticle();
 
     const onClickCreateArticle = useCallback(
         () => history.push("/home/createArticle"),
@@ -33,13 +36,19 @@ export const Home: VFC = memo(() => {
             ) : (
                 <Box>
                     {articles.map((article) => (
-                        <Box key={article.id}>
+                        <Box key={article.id} border="1px" mb={2}>
                             <span>{article.context}</span>
-                            <Image
-                                src={article.article_image}
-                                width={300}
-                                height={40}
-                            />
+                            {article.article_image ? (
+                                <Image
+                                    src={article.article_image}
+                                    width={300}
+                                    height={40}
+                                />
+                            ) : (
+                                false
+                            )}
+                            {article.create_user_name}
+                            <CloseIcon onClick={() => deleteArticle(article.id)}></CloseIcon>
                         </Box>
                     ))}
                     <AddIcon

@@ -27,8 +27,8 @@ export const Header: VFC = memo(() => {
                 justify="space-between"
                 padding={{ base: 3, md: 5 }}
                 boxShadow="md"
-                width='100%'
-                position="fixed"
+                // width='100%'
+                // position="fixed"
             >
                 <Flex
                     align="center"
