@@ -4,13 +4,13 @@ import axios from "axios";
 import { User } from "../types/api/User";
 
 export const useLoginUser = () => {
-    const [loginUser, setloginUser] = useState({});
+    const [loginUser, setLoginUser] = useState({});
 
     const getLoginUser = useCallback(() => {
         axios
-            .get<User>("/api/user")
+            .get<User>("/api/getLoginUser")
             .then((res) => {
-                setloginUser(res.data);
+                setLoginUser(res.data);
             })
             .catch(() => {});
     }, []);

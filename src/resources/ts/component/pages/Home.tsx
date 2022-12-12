@@ -5,6 +5,7 @@ import { AddIcon, CloseIcon } from "@chakra-ui/icons";
 
 import { useAllArticles } from "../../hooks/useAllArticles";
 import { useDeleteArticle } from "../../hooks/useDeleteArticle";
+import { useLoginUser } from "../../hooks/useLoginUser";
 
 //VFCを使用することでchildrenの有無がわかる
 //memoコンポーネントが変更されない限り再レンダリングしない
@@ -15,8 +16,8 @@ import { useDeleteArticle } from "../../hooks/useDeleteArticle";
 export const Home: VFC = memo(() => {
     const history = useHistory();
     const { getArticles, loading, articles } = useAllArticles();
-
     const { deleteArticle } = useDeleteArticle();
+    const { loginUser, getLoginUser } = useLoginUser();
 
     const onClickCreateArticle = useCallback(
         () => history.push("/home/createArticle"),
@@ -25,6 +26,7 @@ export const Home: VFC = memo(() => {
 
     useEffect(() => {
         getArticles();
+        getLoginUser();
     }, []);
 
     return (
@@ -48,7 +50,13 @@ export const Home: VFC = memo(() => {
                                 false
                             )}
                             {article.create_user_name}
-                            <CloseIcon onClick={() => deleteArticle(article.id)}></CloseIcon>
+                            {article.create_user_id === loginUser["id"] ? (
+                                <CloseIcon
+                                    onClick={() => deleteArticle(article.id)}
+                                />
+                            ) : (
+                                false
+                            )}
                         </Box>
                     ))}
                     <AddIcon

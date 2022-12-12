@@ -26,7 +26,7 @@ export const useDeleteArticle = () => {
                     title: "削除しました。",
                     status: "success",
                 });
-                history.push("/home");
+                history.replace("/home");
             })
             .catch((err) => {
                 console.log(err);
