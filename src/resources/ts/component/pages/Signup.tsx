@@ -10,7 +10,8 @@ import {
     Stack,
     InputGroup,
     InputRightElement,
-    Textarea,
+    FormControl,
+    FormErrorMessage,
 } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
@@ -28,6 +29,7 @@ export const Signup: VFC = memo(() => {
     //名前
     const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
+        setIntroduction("よろしくお願いします。");
     }
 
     //メールアドレス
@@ -48,11 +50,6 @@ export const Signup: VFC = memo(() => {
         setUserImage(e.target.files[0]);
     }
 
-    //自己紹介文
-    const onChangeIntoroduction = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        setIntroduction(e.target.value);
-    }
-
     const onClickSignup = () => createUser(name, email, password, user_image, introduction);
 
     return (
@@ -64,54 +61,17 @@ export const Signup: VFC = memo(() => {
                     </Heading>
                     <Divider my={4} />
                     <Stack spacing={6} py={4} px={10}>
-                        <Input
-                            id="name"
-                            type="text"
-                            placeholder="氏名"
-                            name="name"
-                            value={name}
-                            onChange={onChangeName}
-                        />
-                        <Input
-                            id="email"
-                            type="email"
-                            placeholder="メールアドレス"
-                            name="email"
-                            value={email}
-                            onChange={onChangeEmail}
-                        />
+                        <Input type="text" placeholder="氏名" name="name" value={name} onChange={onChangeName}/>
+                        <Input type="email" placeholder="メールアドレス" name="email" value={email} onChange={onChangeEmail}/>
                         <InputGroup size="md">
-                            <Input
-                                pr="4.5rem"
-                                type={show ? "text" : "password"}
-                                placeholder="パスワード"
-                                name="password"
-                                value={password}
-                                onChange={onChangePassword}
-                            />
+                            <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="パスワード" name="password" value={password} onChange={onChangePassword}/>
                             <InputRightElement width="4.5rem">
-                                <Button
-                                    h="1.75rem"
-                                    size="sm"
-                                    onClick={handleClick}
-                                >
+                                <Button h="1.75rem" size="sm" onClick={handleClick}>
                                     {show ? "閉じる" : "表示"}
                                 </Button>
                             </InputRightElement>
                         </InputGroup>
-                        <Input
-                            id="user_image"
-                            name="user_image"
-                            type="file"
-                            placeholder="プロフィール写真"
-                            onChange={onChangeUserImage}
-                        />
-                        <Textarea
-                            name="introduction"
-                            value={introduction}
-                            onChange={onChangeIntoroduction}
-                            placeholder="300文字以内"
-                        />
+                        <Input id="user_image" name="user_image" type="file" placeholder="プロフィール写真" onChange={onChangeUserImage}/>
                         <PrimaryButton onClick={onClickSignup}>
                             ユーザー作成
                         </PrimaryButton>

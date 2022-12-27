@@ -41,14 +41,21 @@ class SignupController extends Controller
      */
     public function store(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'unique:users|max:255',
-        //     'email' => 'unique:users|max:255',
-        //     'password' => 'unique:users|max:255',
-        // ]);
+        $validator = Validator::make($request->all(), [
+            'name' => 'max:30',
+            'email' => ['required', 'email', 'unique:users,email'],
+            'password' => 'max:15',
+            'user_image' => ['nullable', 'max:1024', 'mimes:jpg,jpeg,png,gif']
+        ]);
 
-        // if ($validator->fails()) {
-        // }
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            $response['errors'] = ['name' => [], 'email' => [], 'password' => [], 'file_name' => [], 'introduction' => []];
+            foreach ($errors as $error_key => $error) {
+                $response['errors'][$error_key] = $error;
+            };
+            return response()->json($response, 401);
+        }
 
         if ($request->file('user_image')) {
             $file = $request->file('user_image');
