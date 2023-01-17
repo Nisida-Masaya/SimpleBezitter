@@ -8,4 +8,6 @@ export type Article = {
     create_user_id: number;
     create_user_name: string;
     user_image: string;
+
+
 };

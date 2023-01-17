@@ -12,21 +12,18 @@ export const useDeleteArticle = () => {
     const history = useHistory();
     const { showMessage } = useMessage();
 
-    const deleteArticle = useCallback((id: number ) => {
+    const deleteArticle = useCallback((id: number) => {
         setLoading(true);
 
         axios
-            .delete<Article>(`/api/articles/${id}`, {
-                
-            })
+            .delete<Article>(`/api/articles/${id}`, {})
             .then((res) => {
-                console.log(res.data);
-
                 showMessage({
                     title: "削除しました。",
                     status: "success",
                 });
-                history.replace("/home");
+                history.push("/");
+                history.push("/home");
             })
             .catch((err) => {
                 console.log(err);
