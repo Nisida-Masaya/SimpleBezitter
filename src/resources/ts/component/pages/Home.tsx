@@ -5,21 +5,13 @@ import {
     Center,
     Image,
     Spinner,
-    Button,
     Text,
     Flex,
     useDisclosure,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalCloseButton,
-    ModalBody,
-    ModalHeader,
-    ModalFooter,
 } from "@chakra-ui/react";
 import axios from "axios";
-
 import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+
 import { useAllArticles } from "../../hooks/useAllArticles";
 import { useDeleteArticle } from "../../hooks/useDeleteArticle";
 import { useLoginUser } from "../../hooks/useLoginUser";
@@ -34,7 +26,6 @@ import { ArticleDeleteModal } from "../organisms/article/ArticleDeleteModal";
 export const Home: VFC = memo(() => {
     const history = useHistory();
     const { getArticles, loading, articles } = useAllArticles();
-    const { deleteArticle } = useDeleteArticle();
     const { loginUser, getLoginUser } = useLoginUser();
 
     const { isOpen, onOpen, onClose } = useDisclosure();
