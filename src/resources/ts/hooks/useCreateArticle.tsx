@@ -12,7 +12,7 @@ export const useCreateArticle = () => {
     const history = useHistory();
     const { showMessage } = useMessage();
 
-    const createArticle = useCallback((context: string, article_image, ) => {
+    const createArticle = useCallback((context: string, article_image) => {
         setLoading(true);
         const data = new FormData();
         data.append("context", context);
@@ -25,8 +25,6 @@ export const useCreateArticle = () => {
                 },
             })
             .then((res) => {
-                console.log(res.data);
-
                 showMessage({
                     title: "投稿しました。",
                     status: "success",
