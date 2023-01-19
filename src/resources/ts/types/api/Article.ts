@@ -8,6 +8,7 @@ export type Article = {
     create_user_id: number;
     create_user_name: string;
     user_image: string;
-
-
+    //いいねしたユーザと記事のID
+    like_user_id: number;
+    like_article_id: number;
 };

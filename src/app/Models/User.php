@@ -43,4 +43,36 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //多対多のリレーションを書く
+    public function likes()
+    {
+        return $this->belongsToMany('App\Models\Articles', 'likes', 'user_id', 'article_id')->withTimestamps();
+    }
+
+    //この投稿に対して既にlikeしたかどうかを判別する
+    public function isLike($articleId)
+    {
+        return $this->likes()->where('article_id', $articleId)->exists();
+    }
+
+    //isLikeを使って、既にlikeしたか確認したあと、いいねする（重複させない）
+    public function like($articleId)
+    {
+        if ($this->isLike($articleId)) {
+            //もし既に「いいね」していたら何もしない
+        } else {
+            $this->likes()->attach($articleId);
+        }
+    }
+
+    //isLikeを使って、既にlikeしたか確認して、もししていたら解除する
+    public function unlike($articleId)
+    {
+        if ($this->isLike($articleId)) {
+            //もし既に「いいね」していたら消す
+            $this->likes()->detach($articleId);
+        } else {
+        }
+    }
 }
