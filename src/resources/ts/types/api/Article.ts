@@ -11,4 +11,6 @@ export type Article = {
     //いいねしたユーザと記事のID
     like_user_id: number;
     like_article_id: number;
+    //いいねカウント
+    like_count: number;
 };

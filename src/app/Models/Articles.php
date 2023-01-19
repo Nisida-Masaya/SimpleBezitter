@@ -21,9 +21,9 @@ class Articles extends Model
             'articles.id as id', 'articles.context as context', 'articles.article_image as article_image',
             'articles.created_at', 'users.name as create_user_name', 'users.user_image', 'articles.create_user_id as create_user_id',
             'likes.article_id as like_article_id', 'likes.user_id as like_user_id'
-        ])
+        ])->selectRaw('count(likes.article_id) as like_count')
             ->join('users', 'articles.create_user_id', '=', 'users.id')
-            ->leftJoin('likes', 'articles.id', '=', 'likes.article_id') 
+            ->leftJoin('likes', 'articles.id', '=', 'likes.article_id')
             ->groupBy('id')
             ->orderBy('id', 'desc')
             ->get();
