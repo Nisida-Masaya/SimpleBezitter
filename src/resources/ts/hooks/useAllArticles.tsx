@@ -11,9 +11,7 @@ export const useAllArticles = () => {
         setLoading(true);
         axios
             .get<Array<Article>>("api/articles")
-            .then((res) => {
-                console.log(res.data);
-                
+            .then((res) => {                
                 setArticles(res.data);
             })
             .catch(() => {
