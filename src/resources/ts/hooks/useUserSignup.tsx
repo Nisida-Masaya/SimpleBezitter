@@ -44,14 +44,33 @@ export const useUserSignup = () => {
                     history.push("/");
                 })
                 .catch(() => {
-                    console.log("登録できませんでした");
+                    if (name == '') {
+                        showMessage({
+                            title: "名前が入力されていません。",
+                            status: "error",
+                        });
+                    } else if (email == '') {
+                        showMessage({
+                            title: "メールアドレスが入力されていません。",
+                            status: "error",
+                        });
+                    } else if (password == '') {
+                        showMessage({
+                            title: "パスワードが入力されていません。",
+                            status: "error",
+                        });
+                    } else {
+                        showMessage({
+                            title: "このメールアドレスはすでに登録されています。",
+                            status: "error",
+                        });
+                    };
                 })
                 .finally(() => {
                     setLoading(false);
                 });
-        },
-        []
-    );
+
+    }, []);
 
     return { createUser, loading };
 };
