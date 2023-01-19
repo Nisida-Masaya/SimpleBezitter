@@ -1,5 +1,5 @@
-import React, { ChangeEvent, memo, useState, VFC, HtmlHTMLAttributes } from "react";
-import { Link, BrowserRouter } from "react-router-dom"
+import React, { ChangeEvent, memo, useState, VFC } from "react";
+import { Link } from "react-router-dom";
 import {
     Flex,
     Heading,
@@ -10,6 +10,9 @@ import {
     Stack,
     InputGroup,
     InputRightElement,
+    Textarea,
+    Text,
+
     FormControl,
     FormErrorMessage,
 } from "@chakra-ui/react";
@@ -26,11 +29,14 @@ export const Signup: VFC = memo(() => {
 
     const { createUser } = useUserSignup();
 
+    const isError = email === "" || password === "";
+
     //名前
     const onChangeName = (e: ChangeEvent<HTMLInputElement>) => {
         setName(e.target.value);
         setIntroduction("よろしくお願いします。");
-    }
+
+    };
 
     //メールアドレス
     const onChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,21 +54,50 @@ export const Signup: VFC = memo(() => {
     //プロフィール写真
     const onChangeUserImage = (e) => {
         setUserImage(e.target.files[0]);
-    }
+    };
 
-    const onClickSignup = () => createUser(name, email, password, user_image, introduction);
+    //自己紹介文
+    const onChangeIntoroduction = (e: ChangeEvent<HTMLTextAreaElement>) => {
+        setIntroduction(e.target.value);
+    };
+
+    const onClickSignup = () =>{
+        createUser(name, email, password, user_image, introduction);
+
+    };
 
     return (
         <>
             <Flex align="center" justify="center" height="100vh">
-                <Box bg="white" w="sm" p={4} borderRadius="md" shadow="md">
+                <Box bg="white" w="md" p={4} borderRadius="md" shadow="md">
                     <Heading as="h1" size="lg" textAlign="center">
                         ユーザー新規作成
                     </Heading>
                     <Divider my={4} />
                     <Stack spacing={6} py={4} px={10}>
-                        <Input type="text" placeholder="氏名" name="name" value={name} onChange={onChangeName}/>
-                        <Input type="email" placeholder="メールアドレス" name="email" value={email} onChange={onChangeEmail}/>
+                        <FormControl isInvalid={isError}>
+                            {!isError ? null : (
+                                <FormErrorMessage>
+                                    名前とメールアドレスとパスワードは必須です。
+                                </FormErrorMessage>
+                            )}
+                        </FormControl>
+                        <Input
+                            id="name"
+                            type="text"
+                            placeholder="氏名"
+                            name="name"
+                            value={name}
+                            onChange={onChangeName}
+                        />
+                        <Input
+                            id="email"
+                            type="email"
+                            placeholder="メールアドレス"
+                            name="email"
+                            value={email}
+                            onChange={onChangeEmail}
+                        />
                         <InputGroup size="md">
                             <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="パスワード" name="password" value={password} onChange={onChangePassword}/>
                             <InputRightElement width="4.5rem">
@@ -76,7 +111,12 @@ export const Signup: VFC = memo(() => {
                             ユーザー作成
                         </PrimaryButton>
 
-                        <Link to="/" style={{textAlign: "center"}} >ログイン</Link>
+                        <Link
+                            to="/"
+                            style={{ textAlign: "center", color: "#63B3ED" }}
+                        >
+                            <Text _hover={{ opacity: "0.8" }}>ログイン</Text>
+                        </Link>
                     </Stack>
                 </Box>
             </Flex>

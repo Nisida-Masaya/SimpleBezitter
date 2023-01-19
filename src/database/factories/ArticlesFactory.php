@@ -18,6 +18,7 @@ class ArticlesFactory extends Factory
             'article_image' => 'https://source.unsplash.com/random',
             'created_at' => now(),
             'updated_at' => now(),
+            'create_user_id' => 1
         ];
     }
 }

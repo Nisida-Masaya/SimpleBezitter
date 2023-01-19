@@ -22,7 +22,7 @@ class LoginController extends Controller
 
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            
+
             return response()->json(Auth::user());
         }
         return response()->json([], 401);
@@ -52,12 +52,26 @@ class LoginController extends Controller
         return response()->json(Auth::check());
     }
 
-    public function loginUser(){
+    public function loginUser()
+    {
         //ログインユーザ取得
-        if(!Auth::check()){
+        if (!Auth::check()) {
             return response()->json(false);
         }
-        return response()->json();
         return response()->json(Auth::user());
+    }
+
+    public function getLoginUser(Request $request)
+    {
+        $loginUser = Auth::user();
+
+        dd($loginUser);
+
+        return $loginUser ? response()->json($loginUser, 201) : response()->json($request, 500);
+    }
+
+    public function user_imageUpdate()
+    {
+
     }
 }

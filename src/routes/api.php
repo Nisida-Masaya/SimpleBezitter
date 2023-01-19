@@ -19,6 +19,7 @@ Route::post('logout', 'App\Http\Controllers\LoginController@logout')->name('logo
 Route::post('signup', 'App\Http\Controllers\SignupController@store')->name('signup');
 Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
 Route::get('loginUser', 'App\Http\Controllers\LoginController@loginUser')->name('loginUser');
+Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

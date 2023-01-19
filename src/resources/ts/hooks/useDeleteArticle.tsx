@@ -7,35 +7,29 @@ import axios from "axios";
 import { useMessage } from "./useMessage";
 import { Article } from "../types/api/Article";
 
-export const useCreateArticle = () => {
+export const useDeleteArticle = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const { showMessage } = useMessage();
 
-    const createArticle = useCallback((context: string, article_image) => {
+    const deleteArticle = useCallback((id: number) => {
         setLoading(true);
-        const data = new FormData();
-        data.append("context", context);
-        data.append("article_image", article_image);
 
         axios
-            .post<Article>("/api/articles", data, {
-                headers: {
-                    "content-type": "multipart/form-data",
-                },
-            })
+            .delete<Article>(`/api/articles/${id}`, {})
             .then((res) => {
                 showMessage({
-                    title: "投稿しました。",
+                    title: "削除しました。",
                     status: "success",
                 });
+                history.push("/");
                 history.push("/home");
             })
             .catch((err) => {
                 console.log(err);
 
                 showMessage({
-                    title: "投稿できませんでした。",
+                    title: "削除できませんでした。",
                     status: "error",
                 });
             })
@@ -44,5 +38,5 @@ export const useCreateArticle = () => {
             });
     }, []);
 
-    return { createArticle, loading };
+    return { deleteArticle, loading };
 };

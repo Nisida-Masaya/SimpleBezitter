@@ -1,5 +1,5 @@
 import React, { ChangeEvent, memo, useState, VFC } from "react";
-import { Link, BrowserRouter } from "react-router-dom"
+import { Link } from "react-router-dom";
 import {
     Flex,
     Heading,
@@ -12,6 +12,7 @@ import {
     InputRightElement,
     FormControl,
     FormErrorMessage,
+    Text,
 } from "@chakra-ui/react";
 
 import { PrimaryButton } from "../atoms/button/PrimaryButton";
@@ -90,7 +91,17 @@ export const Login: VFC = memo(() => {
                             ログイン
                         </PrimaryButton>
 
-                        <Link to="Signup" style={{textAlign: "center"}} >ユーザー新規作成</Link>
+                        <Link
+                            to="Signup"
+                            style={{
+                                textAlign: "center",
+                                color: "#63B3ED",
+                            }}
+                        >
+                            <Text _hover={{ opacity: "0.8" }}>
+                                ユーザー新規作成
+                            </Text>
+                        </Link>
                     </Stack>
                 </Box>
             </Flex>

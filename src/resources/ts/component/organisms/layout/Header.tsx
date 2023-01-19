@@ -21,12 +21,15 @@ export const Header: VFC = memo(() => {
         <>
             <Flex
                 as="nav"
-                bg="gray.100"
+                bg="gray.50"
                 color="gray.700"
                 align="center"
                 justify="space-between"
                 padding={{ base: 3, md: 5 }}
+                marginBottom={2}
                 boxShadow="md"
+                // width='100%'
+                // position="fixed"
             >
                 <Flex
                     align="center"

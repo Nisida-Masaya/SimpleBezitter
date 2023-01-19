@@ -21,6 +21,8 @@ class UserSeeder extends Seeder
                 'email' => 'test@example.com',
                 'email_verified_at' => now(),
                 'password' => bcrypt('password'),
+                'user_image' => 'https://source.unsplash.com/random',
+                'introduction' => 'よろしく',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]
@@ -31,6 +33,8 @@ class UserSeeder extends Seeder
                 'email' => 'yamada@example.com',
                 'email_verified_at' => now(),
                 'password' => bcrypt('password'),
+                'user_image' => 'https://source.unsplash.com/random',
+                'introduction' => 'よろしく',
                 'created_at' => now(),
                 'updated_at' => now(),
             ]

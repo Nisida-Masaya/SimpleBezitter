@@ -61,15 +61,23 @@ class SignupController extends Controller
             $file = $request->file('user_image');
             $file_name = $file->getClientOriginalName();
             $request->file('user_image')->storeAs('public/images', $file_name);
-        }
 
-        $signup = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'user_image' => 'storage/' . 'images/' . $file_name,
-            'introduction' => $request->input('introduction')
-        ]);
+            $signup = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'user_image' => 'storage/' . 'images/' . $file_name,
+                'introduction' => $request->input('introduction')
+            ]);
+        }else{
+            $signup = User::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'introduction' => $request->input('introduction')
+            ]);
+
+        }
 
         // dd($signup);
 

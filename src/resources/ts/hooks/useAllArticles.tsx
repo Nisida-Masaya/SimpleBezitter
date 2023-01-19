@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { useCallback, useState } from "react";
 import axios from "axios";
 
 import { Article } from "../types/api/Article";
