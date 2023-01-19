@@ -10,7 +10,6 @@ export const useLoginUser = () => {
         axios
             .get<User>("/api/getLoginUser")
             .then((res) => {
-                
                 setLoginUser(res.data);
             })
             .catch(() => {});

@@ -65,6 +65,13 @@ class LoginController extends Controller
     {
         $loginUser = Auth::user();
 
+        dd($loginUser);
+
         return $loginUser ? response()->json($loginUser, 201) : response()->json($request, 500);
+    }
+
+    public function user_imageUpdate()
+    {
+
     }
 }
