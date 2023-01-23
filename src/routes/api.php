@@ -19,13 +19,16 @@ Route::post('logout', 'App\Http\Controllers\LoginController@logout')->name('logo
 Route::post('signup', 'App\Http\Controllers\SignupController@store')->name('signup');
 Route::post('update', 'App\Http\Controllers\LoginController@update')->name('update');
 Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
-Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
+Route::get('loginUser', 'App\Http\Controllers\LoginController@loginUser')->name('loginUser');
+
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
     Route::get('user', function (Request $request) {
         return $request->user();
     });
     Route::apiResource('articles', 'App\Http\Controllers\ArticlesController');
+    Route::post('like/{articleId}', 'App\Http\Controllers\LikeController@store');
+    Route::post('unlike/{articleId}', 'App\Http\Controllers\LikeController@destroy');
 });
-
