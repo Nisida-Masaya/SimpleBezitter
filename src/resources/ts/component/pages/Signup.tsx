@@ -82,22 +82,8 @@ export const Signup: VFC = memo(() => {
                                 </FormErrorMessage>
                             )}
                         </FormControl>
-                        <Input
-                            id="name"
-                            type="text"
-                            placeholder="氏名"
-                            name="name"
-                            value={name}
-                            onChange={onChangeName}
-                        />
-                        <Input
-                            id="email"
-                            type="email"
-                            placeholder="メールアドレス"
-                            name="email"
-                            value={email}
-                            onChange={onChangeEmail}
-                        />
+                        <Input id="name" type="text" placeholder="氏名" name="name" value={name} onChange={onChangeName}/>
+                        <Input id="email" type="email" placeholder="メールアドレス" name="email" value={email} onChange={onChangeEmail}/>
                         <InputGroup size="md">
                             <Input pr="4.5rem" type={show ? "text" : "password"} placeholder="パスワード" name="password" value={password} onChange={onChangePassword}/>
                             <InputRightElement width="4.5rem">

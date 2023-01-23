@@ -3,7 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
@@ -52,26 +56,41 @@ class LoginController extends Controller
         return response()->json(Auth::check());
     }
 
-    public function loginUser()
-    {
-        //ログインユーザ取得
-        if (!Auth::check()) {
-            return response()->json(false);
-        }
-        return response()->json(Auth::user());
-    }
-
     public function getLoginUser(Request $request)
     {
         $loginUser = Auth::user();
 
-        dd($loginUser);
-
         return $loginUser ? response()->json($loginUser, 201) : response()->json($request, 500);
     }
 
-    public function user_imageUpdate()
+       /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Models\User
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'name' => 'max:30',
+            'introduction' => 'max:500'
+        ]);
 
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            $response['errors'] = ['name' => [], 'introduction' => []];
+            foreach ($errors as $error_key => $error) {
+                $response['errors'][$error_key] = $error;
+            };
+            return response()->json($response, 401);
+        }
+
+        $user = new User();
+
+        $user->where('id', '=', $request->input('id'))
+            ->update([
+                'name' => $request->input('name'),
+                'introduction' => $request->input('introduction'),
+            ]);
     }
 }
