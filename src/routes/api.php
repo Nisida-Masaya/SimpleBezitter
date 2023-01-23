@@ -17,8 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'App\Http\Controllers\LoginController@login')->name('login');
 Route::post('logout', 'App\Http\Controllers\LoginController@logout')->name('logout');
 Route::post('signup', 'App\Http\Controllers\SignupController@store')->name('signup');
+Route::post('update', 'App\Http\Controllers\LoginController@update')->name('update');
 Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
 Route::get('loginUser', 'App\Http\Controllers\LoginController@loginUser')->name('loginUser');
+
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

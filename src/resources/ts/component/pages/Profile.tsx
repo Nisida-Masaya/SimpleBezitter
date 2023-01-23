@@ -16,18 +16,23 @@ import {
   ModalBody,
   ModalCloseButton,
   useDisclosure,
-  Input
+  Input,
+  Textarea
 } from "@chakra-ui/react";
 
 
 import { useLoginUser } from "../../hooks/useLoginUser";
+import { UserImageEditModal } from "../organisms/article/UserImageEditModal";
+import { UserProfileEditModal } from "../organisms/article/UserProfileEditModal";
+
 
 export const Profile: VFC = memo(() => {
 
   const history = useHistory();
-  const { loginUser, loading, getLoginUser } = useLoginUser();
-  const { isOpen, onOpen, onClose } = useDisclosure()
-  const [user_image, setUserImage] = useState("");
+  const { loginUser, getLoginUser } = useLoginUser();
+  const { isOpen: isEditUserImageOpen , onOpen: onEditUserImageOpen, onClose: onEditUserImageClose } = useDisclosure();
+  const { isOpen: isEditUserProfileOpen , onOpen: onEditUserProfileOpen, onClose: onEditUserProfileClose } = useDisclosure();
+  const [ user_image, setUserImage ] = useState("");
 
   const onClickBackPage = useCallback(
     () => history.push("/home"),
@@ -56,49 +61,43 @@ export const Profile: VFC = memo(() => {
           </Stack>
 
           <Stack spacing={6} py={4} px={10} mx={50} marginTop={100} >
-            <Image
-              borderRadius='full'
-              src={ loginUser?.user_image }
-              boxSize='200px'
+            <Image borderRadius='full' src={loginUser["user_image"]} boxSize='200px'/>
+            <Button colorScheme='teal' variant='outline' onClick={onEditUserImageOpen}>画像編集</Button>
+            
+            <UserImageEditModal
+              isOpen={isEditUserImageOpen}
+              onClose={onEditUserImageClose}
             />
-            <Button colorScheme='teal' variant='outline' onClick={onOpen}>画像編集</Button>
-
-            <Modal isOpen={isOpen} onClose={onClose}>
-              <ModalOverlay />
-                <ModalContent>
-                  <ModalHeader>画像編集</ModalHeader>
-                  <ModalCloseButton />
-                  <ModalBody>
-                    <Input id="user_image" name="user_image" type="file" placeholder="プロフィール写真" onChange={onChangeUserImage}/>
-                  </ModalBody>
-
-                <ModalFooter>
-                  <Button mr={3} onClick={onClose}>キャンセル</Button>
-                  <Button colorScheme='blue'>確定</Button>
-                </ModalFooter>
-              </ModalContent>
-            </Modal>
 
           </Stack>
 
           <Stack spacing={6} py={4} px={10} mx={100} marginTop={100}>
-            <Text>メールアドレス</Text>
+            <Text>メールアドレス（編集できません）</Text>
             <Box bg="white" w="sm" px={3} py={1} borderRadius="md">
-              <Text>{ loginUser?.email }</Text>
+              <Text>{ loginUser["email"] }</Text>
             </Box>
             <Text>氏名（ニックネーム）</Text>
             <Box bg="white" w="sm" px={3} py={1} borderRadius="md">
-              <Text>{ loginUser?.name }</Text>
+              <Text>{ loginUser["name"] }</Text>
             </Box>
             <Text>投稿内容</Text>
             <Box bg="white" w="sm" h={100} px={3} py={1} borderRadius="md">
-              <Text>{ loginUser?.introduction }</Text>
+              <Text>{ loginUser["introduction"] }</Text>
             </Box>
           </Stack>
 
           <Stack spacing={6} py={4} px={10} mx={5}>
-            <Button colorScheme='teal' marginTop={0} marginBottom={100} variant='outline' onClick={onOpen}>編集</Button>
+            <Button colorScheme='teal' marginTop={10} variant='outline' onClick={onEditUserProfileOpen}>編集</Button>
           </Stack>
+
+          <UserProfileEditModal
+            id={loginUser["id"]}
+            name={loginUser["name"]}
+            introduction={loginUser["introduction"]}
+            isOpen={isEditUserProfileOpen}
+            onClose={onEditUserProfileClose}
+          />
+
         </Flex>
     </>
   );
