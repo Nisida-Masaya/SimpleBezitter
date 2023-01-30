@@ -35,6 +35,8 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
     const onClickHome = useCallback(() => history.push("/home"), []);
     //プロフィールリンク
     const onClickProfile = useCallback(() => history.push("/home/profile"), []);
+    //パスワード変更リンク
+    const onClickPassword = useCallback(() => history.push("/home/password"), []);
 
     return (
         <Drawer placement="right" size="xs" onClose={onClose} isOpen={isOpen}>
@@ -67,7 +69,7 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
                             </svg>
                             プロフィール
                         </Button>
-                        <Button w="100%">
+                        <Button w="100%" onClick={onClickPassword}>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"

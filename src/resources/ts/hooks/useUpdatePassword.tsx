@@ -5,38 +5,37 @@ import axios from "axios";
 import { useMessage } from "./useMessage";
 import { User } from "../types/api/User";
 
-export const useEditUserProfile = () => {
+export const useUpdatePassword = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const { showMessage } = useMessage();
 
-    const updateUserProfile = useCallback((id: number, name: string, introduction: string) => {
+    const updatePassword = useCallback((inputNowPassword: string, newPassword: string, newPasswordCheck: string) => {
         setLoading(true);
 
         const data = new FormData();
-        data.append("id", id.toString());
-        data.append("name", name);
-        data.append("introduction", introduction);
+        data.append("inputNowPassword", inputNowPassword);
+        data.append("newPassword", newPassword);
+        data.append("newPasswordCheck", newPasswordCheck);
 
         axios
-            .post<User>("/api/update", data, {
+            .post<User>("/api/updatePassword", data, {
                 headers: {
                     "content-type": "multipart/form-data",
                 },
             })
             .then((res) => {
                 showMessage({
-                    title: "プロフィールを更新しました。",
+                    title: "パスワードを変更しました。",
                     status: "success",
                 });
-                history.push("/");
-                history.push("/home/profile");
+                history.push("/home");
             })
             .catch((err) => {
                 console.log(err);
 
                 showMessage({
-                    title: "更新に失敗しました。",
+                    title: "15文字以内で設定してください。",
                     status: "error",
                 });
             })
@@ -45,5 +44,5 @@ export const useEditUserProfile = () => {
             });
     }, []);
 
-    return { updateUserProfile, loading };
+    return { updatePassword, loading };
 };

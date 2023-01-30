@@ -20,6 +20,8 @@ Route::post('signup', 'App\Http\Controllers\SignupController@store')->name('sign
 Route::post('update', 'App\Http\Controllers\LoginController@update')->name('update');
 Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
 Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
+Route::post('userImageUpdate', 'App\Http\Controllers\LoginController@userImageUpdate')->name('userImageUpdate');
+Route::post('updatePassword', 'App\Http\Controllers\LoginController@updatePassword')->name('updatePassword');
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {

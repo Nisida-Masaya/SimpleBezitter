@@ -5,21 +5,20 @@ import axios from "axios";
 import { useMessage } from "./useMessage";
 import { User } from "../types/api/User";
 
-export const useEditUserProfile = () => {
+export const useEditUserImage = () => {
     const [loading, setLoading] = useState(false);
     const history = useHistory();
     const { showMessage } = useMessage();
 
-    const updateUserProfile = useCallback((id: number, name: string, introduction: string) => {
+    const updateUserImage = useCallback((id: number, user_image: string) => {
         setLoading(true);
 
         const data = new FormData();
         data.append("id", id.toString());
-        data.append("name", name);
-        data.append("introduction", introduction);
+        data.append("user_image", user_image);
 
         axios
-            .post<User>("/api/update", data, {
+            .post<User>("/api/userImageUpdate", data, {
                 headers: {
                     "content-type": "multipart/form-data",
                 },
@@ -45,5 +44,5 @@ export const useEditUserProfile = () => {
             });
     }, []);
 
-    return { updateUserProfile, loading };
+    return { updateUserImage, loading };
 };

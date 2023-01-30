@@ -9,20 +9,30 @@ import {
     ModalOverlay,
     Input,
 } from "@chakra-ui/react";
-import React, { memo, VFC } from "react";
 
+import React, { ChangeEvent, memo, useState, VFC } from "react";
+
+import { useEditUserImage } from "../../../hooks/useEditUserImage";
 
 type Props = {
+    id: number;
+    user_image: string;
     isOpen: boolean;
     onClose: () => void;
 };
 
 export const UserImageEditModal: VFC<Props> = memo((props) => {
-    const { isOpen, onClose } = props;
-    //const { deleteArticle } = useDeleteArticle();
+    const { id, user_image, isOpen, onClose } = props;
+    const { updateUserImage } = useEditUserImage();
+
+    const [userImage, setUserImage] = useState("");
 
     const onChangeUserImage = (e) => {
-        
+        setUserImage(e.target.files[0]);
+    };
+
+    const onClickUpdateUserImage = () => {
+        updateUserImage(id, userImage);
     };
 
     return (
@@ -37,7 +47,7 @@ export const UserImageEditModal: VFC<Props> = memo((props) => {
 
                 <ModalFooter>
                     <Button mr={3} onClick={onClose}>キャンセル</Button>
-                    <Button colorScheme='blue'>確定</Button>
+                    <Button colorScheme='blue' onClick={onClickUpdateUserImage}>確定</Button>
                 </ModalFooter>
             </ModalContent>
         </Modal>
