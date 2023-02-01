@@ -76,6 +76,10 @@ export const Router = () => {
                         <Profile></Profile>
                     </Route>
 
+                    <Route exact path="/signup">
+                        <Signup></Signup>
+                    </Route>
+
                     <Route path="*">
                         <Page404 />
                     </Route>

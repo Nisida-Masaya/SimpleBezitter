@@ -31,7 +31,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $hidden = [
-        'password',
+        // 'password',
         'remember_token',
     ];
 
@@ -43,6 +43,14 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public static function getLoginUser(int $id)
+    {
+        return User::select([
+            'users.id', 'users.name', 'users.password', 'users.email', 'users.user_image', 'users.introduction'
+        ])
+        ->where('users.id', '=', $id)
+        ->get();
 
     //多対多のリレーションを書く
     public function likes()
