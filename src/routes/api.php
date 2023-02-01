@@ -22,12 +22,16 @@ Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAut
 Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
 Route::post('userImageUpdate', 'App\Http\Controllers\LoginController@userImageUpdate')->name('userImageUpdate');
 Route::post('updatePassword', 'App\Http\Controllers\LoginController@updatePassword')->name('updatePassword');
+Route::get('loginUser', 'App\Http\Controllers\LoginController@loginUser')->name('loginUser');
+
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
     Route::get('user', function (Request $request) {
         return $request->user();
     });
     Route::apiResource('articles', 'App\Http\Controllers\ArticlesController');
+    Route::post('like/{articleId}', 'App\Http\Controllers\LikeController@store');
+    Route::post('unlike/{articleId}', 'App\Http\Controllers\LikeController@destroy');
 });
-
