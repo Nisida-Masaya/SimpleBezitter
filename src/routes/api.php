@@ -19,6 +19,9 @@ Route::post('logout', 'App\Http\Controllers\LoginController@logout')->name('logo
 Route::post('signup', 'App\Http\Controllers\SignupController@store')->name('signup');
 Route::post('update', 'App\Http\Controllers\LoginController@update')->name('update');
 Route::get('isAuth', 'App\Http\Controllers\LoginController@isAuth')->name('isAuth');
+Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
+Route::post('userImageUpdate', 'App\Http\Controllers\LoginController@userImageUpdate')->name('userImageUpdate');
+Route::post('updatePassword', 'App\Http\Controllers\LoginController@updatePassword')->name('updatePassword');
 Route::get('loginUser', 'App\Http\Controllers\LoginController@loginUser')->name('loginUser');
 
 

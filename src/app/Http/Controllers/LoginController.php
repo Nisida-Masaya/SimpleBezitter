@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
+
 class LoginController extends Controller
 {
     /**
@@ -58,12 +59,16 @@ class LoginController extends Controller
 
     public function getLoginUser(Request $request)
     {
-        $loginUser = Auth::user();
+        $loginUserId = Auth::id();
+
+        $users = new User();
+
+        $loginUser = $users->getLoginUser((int)$loginUserId);
 
         return $loginUser ? response()->json($loginUser, 201) : response()->json($request, 500);
     }
 
-       /**
+    /**
      * Update the specified resource in storage.
      *
      * @param  \App\Models\User
@@ -92,5 +97,77 @@ class LoginController extends Controller
                 'name' => $request->input('name'),
                 'introduction' => $request->input('introduction'),
             ]);
+    }
+
+       /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Models\User
+     * @return \Illuminate\Http\Response
+     */
+    public function userImageUpdate(Request $request)
+    {
+        // $validator = Validator::make($request->input('user_image'), [
+        //     'user_image' => ['nullable', 'max:1024', 'mimes:jpg,jpeg,png,gif']
+        // ]);
+
+        // if ($validator->fails()) {
+        //     $errors = $validator->errors()->toArray();
+        //     $response['errors'] = ['name' => [], 'introduction' => []];
+        //     foreach ($errors as $error_key => $error) {
+        //         $response['errors'][$error_key] = $error;
+        //     };
+        //     return response()->json($response, 401);
+        // }
+
+        $user = new User();
+
+        // $file = $request->file('user_image');
+        // $file_name = $file->getClientOriginalName();
+        // $request->file('user_image')->storeAs('public/images', $file_name);
+
+        // $user->where('id', '=', $request->input('id'))
+        //     ->destroy();
+
+        $file = $request->file('user_image');
+        $file_name = $file->getClientOriginalName();
+
+        $user->where('id', '=', $request->input('id'))
+            ->update([
+                'user_image' => 'storage/' . 'images/' . $file_name,
+            ]);
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \App\Models\User
+     * @return \Illuminate\Http\Response
+     */
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(),[
+            'newPassword' => 'max:15',
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            $response['errors'] = ['password' => []];
+            foreach ($errors as $error_key => $error) {
+                $response['errors'][$error_key] = $error;
+            };
+            return response()->json($response, 401);
+        }
+
+        $user = \Auth::user();
+
+        if(!password_verify($request->inputNowPassword,$user->password))
+        {
+            return redirect('/home')
+                ->with('warning','パスワードが違います');
+        }
+
+        $user->password = bcrypt($request->newPassword);
+        $user->save();
     }
 }
