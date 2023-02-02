@@ -15,6 +15,7 @@ import { PrimaryButton } from "../atoms/button/PrimaryButton";
 
 export const CreateArticle: VFC = memo(() => {
     const history = useHistory();
+
     const [newArticleContext, setNewArticleContext] = useState("");
     const [newArticleImage, setNewArticleImage] = useState("");
     const { createArticle } = useCreateArticle();
@@ -22,6 +23,7 @@ export const CreateArticle: VFC = memo(() => {
     const onChangeArticleContext = (e: ChangeEvent<HTMLTextAreaElement>) => {
         setNewArticleContext(e.target.value);
     };
+    
     const onChangeArticleImage = (e) => {
         setNewArticleImage(e.target.files[0]);
     };
@@ -32,7 +34,7 @@ export const CreateArticle: VFC = memo(() => {
     return (
         <>
             <ArrowBackIcon onClick={() => history.goBack()} ml="10" w={5} h={5} />
-            <Box onSubmit={onClickCreateArticle} w={1000} ml={100}>
+            <Box onSubmit={onClickCreateArticle} w={1000} ml="15%">
                 <Stack spacing={6} py={3} px={5}>
                     <FormLabel>投稿内容</FormLabel>
                     <Textarea

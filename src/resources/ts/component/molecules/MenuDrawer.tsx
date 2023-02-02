@@ -7,7 +7,7 @@ import {
     DrawerFooter,
     DrawerOverlay,
 } from "@chakra-ui/react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useAuthenticate } from "../../hooks/useAuthenticate";
 
@@ -35,6 +35,8 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
     const onClickHome = useCallback(() => history.push("/home"), []);
     //プロフィールリンク
     const onClickProfile = useCallback(() => history.push("/home/profile"), []);
+    //いいねリスト(ログインユーザの)
+    const onClickMyGoodList = useCallback(() => history.push("/home/myGoodList"), []);
 
     return (
         <Drawer placement="right" size="xs" onClose={onClose} isOpen={isOpen}>
@@ -79,6 +81,22 @@ export const MenuDrawer: VFC<Props> = memo((props) => {
                                 <path d="M3.5 11.5a3.5 3.5 0 1 1 3.163-5H14L15.5 8 14 9.5l-1-1-1 1-1-1-1 1-1-1-1 1H6.663a3.5 3.5 0 0 1-3.163 2zM2.5 9a1 1 0 1 0 0-2 1 1 0 0 0 0 2z" />
                             </svg>
                             パスワード変更
+                        </Button>
+                        <Button w="100%" onClick={onClickMyGoodList}>
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                fill="currentColor"
+                                className="bi bi-clipboard-heart-fill"
+                                viewBox="0 0 16 16"
+                            >
+                                <path
+                                    fill-rule="evenodd"
+                                    d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3Zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3ZM4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1A2.5 2.5 0 0 1 9.5 5h-3A2.5 2.5 0 0 1 4 2.5v-1Zm4 5.982c1.664-1.673 5.825 1.254 0 5.018-5.825-3.764-1.664-6.69 0-5.018Z"
+                                />
+                            </svg>
+                            自分のいいねリスト
                         </Button>
                     </DrawerBody>
                     <DrawerFooter p={0} bg="gray.100">

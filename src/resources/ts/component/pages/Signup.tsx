@@ -10,7 +10,6 @@ import {
     Stack,
     InputGroup,
     InputRightElement,
-    Textarea,
     Text,
 
     FormControl,
@@ -96,7 +95,7 @@ export const Signup: VFC = memo(() => {
                         <PrimaryButton onClick={onClickSignup}>
                             ユーザー作成
                         </PrimaryButton>
-
+ 
                         <Link
                             to="/"
                             style={{ textAlign: "center", color: "#63B3ED" }}

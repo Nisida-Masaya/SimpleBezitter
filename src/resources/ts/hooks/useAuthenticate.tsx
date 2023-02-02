@@ -6,7 +6,6 @@ import { User } from "../types/api/User";
 import { useMessage } from "./useMessage";
 type promiseType = (data: boolean) => void;
 
-
 export const useAuthenticate = () => {
     const [isAuth, setIsAuth] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -19,24 +18,27 @@ export const useAuthenticate = () => {
         ({ email, password }: { email: string; password: string }) => {
             setLoading(true);
             setIsAuth(true);
-            axios
-                .post<User>("/api/login", { email, password })
-                .then((res) => {
-                    showMessage({
-                        title: "ログインしました。",
-                        status: "success",
+            axios.get("/sanctum/csrf-cookie").then(() => {
+                // ログイン…
+                axios
+                    .post<User>("/api/login", { email, password })
+                    .then((res) => {
+                        showMessage({
+                            title: "ログインしました。",
+                            status: "success",
+                        });
+                        history.replace("/home");
+                    })
+                    .catch(() => {
+                        showMessage({
+                            title: "ログインに失敗しました。",
+                            status: "error",
+                        });
+                    })
+                    .finally(() => {
+                        setLoading(false);
                     });
-                    history.replace("/home");
-                })
-                .catch(() => {
-                    showMessage({
-                        title: "ログインに失敗しました。",
-                        status: "error",
-                    });
-                })
-                .finally(() => {
-                    setLoading(false);
-                });
+            });
         },
         []
     );
@@ -63,9 +65,10 @@ export const useAuthenticate = () => {
 
     const IsAuth = () => {
         return new Promise((resolve: promiseType, reject: promiseType) => {
-            axios.get('api/isAuth')
-            .then((res) => resolve(res.data))
-            .catch((e) => reject(e))
+            axios
+                .get("/api/isAuth")
+                .then((res) => resolve(res.data))
+                .catch((e) => reject(e));
         });
     };
 

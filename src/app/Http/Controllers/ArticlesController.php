@@ -7,8 +7,10 @@ use App\Http\Requests\UpdateArticlesRequest;
 use App\Http\Requests\ArticlesRequest;
 use Illuminate\Http\Request;
 use App\Models\Articles;
+use App\Models\Like;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class ArticlesController extends Controller
@@ -24,7 +26,6 @@ class ArticlesController extends Controller
 
         $articles = new Articles();
         $all_articles = $articles->getAllArticles();
-        // dd($articles);
 
         return $all_articles ? response()->json($all_articles, 201) : response()->json($request, 500);
     }
@@ -124,5 +125,15 @@ class ArticlesController extends Controller
 
         return $article->delete() ? response()->json($article)
             : response()->json([], 500);
+    }
+
+    public function getGoodMyList(Request $request)
+    {
+        $loginUserId = Auth::id();
+
+        $articles = new Articles();
+        $goodList = $articles->getGoodMyLists((int) $loginUserId);  
+
+        return $goodList ? response()->json($goodList, 201) : response()->json($request, 500);
     }
 }
