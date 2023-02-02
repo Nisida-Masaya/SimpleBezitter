@@ -2,29 +2,18 @@ import React, { memo, useCallback, useEffect, VFC, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { ArrowBackIcon } from "@chakra-ui/icons";
 import {
-  Box,
-  Image,
-  Flex,
-  Button,
-  Stack,
-  Text,
-  Modal,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
-  Input,
-  Textarea
+    Box,
+    Image,
+    Flex,
+    Button,
+    Stack,
+    Text,
+    useDisclosure,
 } from "@chakra-ui/react";
 
-
 import { useLoginUser } from "../../hooks/useLoginUser";
-import { UserImageEditModal } from "../organisms/article/UserImageEditModal";
-import { UserProfileEditModal } from "../organisms/article/UserProfileEditModal";
-
+import { UserImageEditModal } from "../organisms/user/UserImageEditModal";
+import { UserProfileEditModal } from "../organisms/user/UserProfileEditModal";
 
 export const Profile: VFC = memo(() => {
 
@@ -103,4 +92,3 @@ export const Profile: VFC = memo(() => {
   );
 
 });
- 

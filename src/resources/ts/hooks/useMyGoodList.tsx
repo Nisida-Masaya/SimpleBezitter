@@ -3,19 +3,17 @@ import axios from "axios";
 
 import { Article } from "../types/api/Article";
 
-export const useAllArticles = () => {
+export const useMyGoodList = () => {
     const [loading, setLoading] = useState(false);
-    const [articles, setArticles] = useState<Array<Article>>([]);
+    const [myGoodArticles, setMyGoodArticles] = useState<Array<Article>>([]);
 
-    const getArticles = useCallback(() => {
+    const getMyGoodArticles = useCallback(() => {
         setLoading(true);
-
         axios
-            .get<Array<Article>>("api/articles")
+            .get<Array<Article>>("/api/list")
             .then((res) => {
                 console.log(res);
-
-                setArticles(res.data);
+                setMyGoodArticles(res.data);
             })
             .catch(() => {
                 console.log("投稿記事の取得に失敗しました。");
@@ -24,6 +22,6 @@ export const useAllArticles = () => {
                 setLoading(false);
             });
     }, []);
-
-    return { getArticles, loading, articles };
+ 
+    return { getMyGoodArticles, loading, myGoodArticles };
 };

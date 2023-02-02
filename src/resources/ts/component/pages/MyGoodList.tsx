@@ -11,10 +11,9 @@ import {
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
 
-import { CreateArticleIconButton } from "../atoms/button/CreateArticleIconButton";
-import { useAllArticles } from "../../hooks/useAllArticles";
 import { useLoginUser } from "../../hooks/useLoginUser";
 import { ArticleDeleteModal } from "../organisms/article/ArticleDeleteModal";
+import { useMyGoodList } from "../../hooks/useMyGoodList";
 import { useLike } from "../../hooks/useLike";
 import { useUnLike } from "../../hooks/useUnLike";
 
@@ -24,15 +23,16 @@ import { useUnLike } from "../../hooks/useUnLike";
   propsとしては違うものと判断
   useCallBackと使うと処理が変わらない場合は同じものを使う（関数を使う時）
 */
-export const Home: VFC = memo(() => {
+export const MyGoodList: VFC = memo(() => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const { getArticles, loading, articles } = useAllArticles();
-    const { loginUser, getLoginUser } = useLoginUser();
-    const [delArticle, setDelArticle] = useState<number>(0);
+    const { getMyGoodArticles, loading, myGoodArticles } = useMyGoodList();
     const { onClickGood } = useLike();
     const { onClickUnGood } = useUnLike();
+    const { loginUser, getLoginUser } = useLoginUser();
+    const [delArticle, setDelArticle] = useState<number>(0);
 
+    //記事削除
     const onClickDeleteArticle = useCallback((article_id: number) => {
         setDelArticle(article_id);
     }, []);
@@ -48,7 +48,7 @@ export const Home: VFC = memo(() => {
     }, []);
 
     useEffect(() => {
-        getArticles();
+        getMyGoodArticles();
         getLoginUser();
     }, []);
 
@@ -60,7 +60,7 @@ export const Home: VFC = memo(() => {
                 </Center>
             ) : (
                 <Box>
-                    {articles.map((article) => (
+                    {myGoodArticles.map((article) => (
                         <Box
                             key={article.id}
                             backgroundColor="gray.100"
@@ -79,9 +79,7 @@ export const Home: VFC = memo(() => {
                                             width={30}
                                             height={30}
                                         />
-                                    ) : (
-                                        false
-                                    )}
+                                    ) : null}
                                     <Text pl={2}>
                                         {article.create_user_name}
                                     </Text>
@@ -93,9 +91,7 @@ export const Home: VFC = memo(() => {
                                             onOpen();
                                         }}
                                     />
-                                ) : (
-                                    false
-                                )}
+                                ) : null}
                             </Flex>
                             <Text ml={10}>{article.context}</Text>
                             {article.article_image ? (
@@ -105,9 +101,7 @@ export const Home: VFC = memo(() => {
                                     width={300}
                                     ml={10}
                                 />
-                            ) : (
-                                false
-                            )}
+                            ) : null}
                             {/* いいねしてるかの判定 */}
                             <Flex>
                                 {article.like_user_id === loginUser["id"] ? (
@@ -157,7 +151,6 @@ export const Home: VFC = memo(() => {
                         isOpen={isOpen}
                         onClose={onClose}
                     />
-                    <CreateArticleIconButton />
                 </Box>
             )}
         </>

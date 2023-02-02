@@ -27,11 +27,14 @@ Route::get('loginUser', 'App\Http\Controllers\LoginController@loginUser')->name(
 
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser')->name('getLoginUser');
+    Route::get('getLoginUser', 'App\Http\Controllers\LoginController@getLoginUser');
     Route::get('user', function (Request $request) {
         return $request->user();
     });
     Route::apiResource('articles', 'App\Http\Controllers\ArticlesController');
+    // Route::get('getGoodMyList', 'App\Http\Controllers\ArticlesController@getGoodMyList');
+    Route::apiResource('list', 'App\Http\Controllers\ListController');
+    // Route::apiResource('list', 'App\Http\Controllers\ListController');
     Route::post('like/{articleId}', 'App\Http\Controllers\LikeController@store');
     Route::post('unlike/{articleId}', 'App\Http\Controllers\LikeController@destroy');
 });

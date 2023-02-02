@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -14,7 +15,9 @@ class ExampleTest extends TestCase
      */
     public function test_example()
     {
-        $response = $this->get('/');
+        $user = User::factory()->create();
+        $user = User::find(1);
+        $response = $this->actingAs($user)->json('GET', 'api/list');
 
         $response->assertStatus(200);
     }

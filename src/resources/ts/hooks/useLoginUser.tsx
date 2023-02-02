@@ -9,9 +9,7 @@ export const useLoginUser = () => {
     const getLoginUser = useCallback(() => {
         axios
             .get<User>("/api/getLoginUser")
-            .then((res) => {
-                console.log(res.data);
-                
+            .then((res) => {                
                 setLoginUser(res.data);
             })
             .catch(() => {});

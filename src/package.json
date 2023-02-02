@@ -37,6 +37,7 @@
         "@chakra-ui/system": "^1.0.0",
         "@emotion/react": "^11.10.5",
         "@emotion/styled": "^11.10.5",
-        "framer-motion": "^3.10.6"
+        "framer-motion": "^3.10.6",
+        "react-error-boundary": "^3.1.4"
     }
 }

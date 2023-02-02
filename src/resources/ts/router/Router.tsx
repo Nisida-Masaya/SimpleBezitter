@@ -5,10 +5,10 @@ import { Center, Spinner } from "@chakra-ui/react";
 import { Login } from "../component/pages/Login";
 import { Signup } from "../component/pages/Signup";
 import { Page404 } from "../component/pages/Page404";
-import { Profile } from "../component/pages/Profile";
 import { HomeRoutes } from "./HomeRoutes";
 import { HeaderLayout } from "../component/templates/HeaderLayout";
 import { useAuthenticate } from "../hooks/useAuthenticate";
+import { MyGoodList } from "../component/pages/MyGoodList";
 
 export const Router = () => {
     const history = useHistory();
@@ -72,8 +72,8 @@ export const Router = () => {
                         )}
                     />
 
-                    <Route exact path="/profile">
-                        <Profile></Profile>
+                    <Route exact path="/Signup">
+                        <Signup />
                     </Route>
 
                     <Route exact path="/signup">
