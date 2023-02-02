@@ -51,6 +51,7 @@ class User extends Authenticatable
         ])
         ->where('users.id', '=', $id)
         ->get();
+    }
 
     //多対多のリレーションを書く
     public function likes()
