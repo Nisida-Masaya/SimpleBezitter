@@ -8,7 +8,6 @@ import { Page404 } from "../component/pages/Page404";
 import { HomeRoutes } from "./HomeRoutes";
 import { HeaderLayout } from "../component/templates/HeaderLayout";
 import { useAuthenticate } from "../hooks/useAuthenticate";
-import { MyGoodList } from "../component/pages/MyGoodList";
 
 export const Router = () => {
     const history = useHistory();

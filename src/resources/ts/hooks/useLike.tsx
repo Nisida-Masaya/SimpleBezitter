@@ -19,5 +19,5 @@ export const useLike = () => {
         }
     }, []);
 
-    return { onClickGood };
+    return { onClickGood }; 
 };

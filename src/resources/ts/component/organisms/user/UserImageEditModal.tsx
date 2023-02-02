@@ -14,7 +14,7 @@ import React, { ChangeEvent, memo, useState, VFC } from "react";
 
 import { useEditUserImage } from "../../../hooks/useEditUserImage";
 
-type Props = {
+type Props = { 
     id: number;
     user_image: string;
     isOpen: boolean;

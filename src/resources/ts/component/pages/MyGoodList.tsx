@@ -15,7 +15,7 @@ import { useLoginUser } from "../../hooks/useLoginUser";
 import { ArticleDeleteModal } from "../organisms/article/ArticleDeleteModal";
 import { useMyGoodList } from "../../hooks/useMyGoodList";
 import { useLike } from "../../hooks/useLike";
-import { useUnLike } from "../../hooks/useUnLike";
+import { useUnLike } from "../../hooks/useUnLike"; 
 
 //VFCを使用することでchildrenの有無がわかる
 //memoコンポーネントが変更されない限り再レンダリングしない

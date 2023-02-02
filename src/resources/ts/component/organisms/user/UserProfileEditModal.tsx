@@ -17,7 +17,7 @@ import { useEditUserProfile } from "../../../hooks/useEditUserProfile";
 
 
 type Props = {
-    id: number;
+    id: number; 
     name: string;
     introduction: string;
     isOpen: boolean;

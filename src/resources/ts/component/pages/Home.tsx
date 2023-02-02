@@ -157,7 +157,7 @@ export const Home: VFC = memo(() => {
                         isOpen={isOpen}
                         onClose={onClose}
                     />
-                    <CreateArticleIconButton />
+                    <CreateArticleIconButton /> 
                 </Box>
             )}
         </>
