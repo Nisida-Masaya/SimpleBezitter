@@ -1,4 +1,5 @@
 import React, { memo, useCallback, useEffect, useState, VFC } from "react";
+import { useHistory } from "react-router-dom";
 import {
     Box,
     Center,
@@ -10,6 +11,9 @@ import {
     Button,
 } from "@chakra-ui/react";
 import { CloseIcon } from "@chakra-ui/icons";
+import { format } from "date-fns";
+import moment from "moment";
+import Moment from "react-moment";
 
 import { CreateArticleIconButton } from "../atoms/button/CreateArticleIconButton";
 import { useAllArticles } from "../../hooks/useAllArticles";
@@ -17,6 +21,7 @@ import { useLoginUser } from "../../hooks/useLoginUser";
 import { ArticleDeleteModal } from "../organisms/article/ArticleDeleteModal";
 import { useLike } from "../../hooks/useLike";
 import { useUnLike } from "../../hooks/useUnLike";
+import axios from "axios";
 
 //VFCを使用することでchildrenの有無がわかる
 //memoコンポーネントが変更されない限り再レンダリングしない
@@ -26,13 +31,22 @@ import { useUnLike } from "../../hooks/useUnLike";
 */
 export const Home: VFC = memo(() => {
     const { isOpen, onOpen, onClose } = useDisclosure();
+    const history = useHistory();
 
     const { getArticles, loading, articles } = useAllArticles();
     const { loginUser, getLoginUser } = useLoginUser();
     const [delArticle, setDelArticle] = useState<number>(0);
+    const [judge, setJudge] = useState<number>();
     const { onClickGood } = useLike();
     const { onClickUnGood } = useUnLike();
 
+    //ユーザ情報参照
+    const onClickUserProfile = useCallback((user_id: number) => {
+        setJudge(user_id);
+        history.push("/home/profile");
+    }, []);
+
+    //記事削除
     const onClickDeleteArticle = useCallback((article_id: number) => {
         setDelArticle(article_id);
     }, []);
@@ -45,6 +59,14 @@ export const Home: VFC = memo(() => {
     //いいね解除
     const onClickUnLike = useCallback((id: number) => {
         onClickUnGood(id);
+    }, []);
+
+    //フォロー
+    const onClickFollow = useCallback((user_id: number) => {
+        axios.post(`/api/users/${user_id}/follow`).then(() => {
+            history.replace("/");
+            history.replace("/home");
+        });
     }, []);
 
     useEffect(() => {
@@ -78,12 +100,36 @@ export const Home: VFC = memo(() => {
                                             borderRadius="50px"
                                             width={30}
                                             height={30}
+                                            onClick={() => {
+                                                onClickUserProfile(
+                                                    article.create_user_id
+                                                );
+                                            }}
                                         />
                                     ) : (
                                         false
                                     )}
-                                    <Text pl={2}>
+                                    <Text pl={2} pr={2} pt={1}>
                                         {article.create_user_name}
+                                    </Text>
+                                    {/* <Text
+                                        border="1px"
+                                        rounded="full"
+                                        p={1}
+                                        _hover={{ opacity: 0.8 }}
+                                        cursor="pointer"
+                                        onClick={() => {
+                                            onClickFollow(
+                                                article.create_user_id
+                                            );
+                                        }}
+                                    >
+                                        フォローする
+                                    </Text> */}
+                                    <Text pl={2} pr={2} pt={1}>
+                                        <Moment format="YYYY/MM/DD">
+                                            {article.created_at}
+                                        </Moment>
                                     </Text>
                                 </Flex>
                                 {article.create_user_id === loginUser["id"] ? (
